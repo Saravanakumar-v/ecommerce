@@ -1,0 +1,149 @@
+
+<div class="container-fluid">
+    <div class="top-bar">
+        <div>
+            <div class="site" (click)="getAllProduct();setCategoryClicked(false)">E-Shop</div>
+            
+            <input class="form-control web-search" type="text" placeholder="Search" #input (keypress)="onKeyPress($event)" (keydown.enter)="searchProduct(input.value);setCategoryClicked(true)">
+            
+            <div class="material-symbols-outlined cart" (click)="addtoCart()">
+                shopping_cart
+                <span class="badge badge-warning">{{cartLength}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="category">
+        <div class="btn-group" *ngFor="let category of productCategory;let i=index">
+            <button type="button" class="btn btn-default list" [matMenuTriggerFor]="menu" #triggerMenu="matMenuTrigger" (mouseenter)="categoryList(i);triggerMenu.openMenu()" (mouseleave)="triggerMenu.closeMenu()">
+                <span>{{category}}</span>
+            </button>
+            
+            <mat-menu [hasBackdrop]="false" #menu="matMenu" class="menu">
+
+                <span (mouseleave)="triggerMenu.closeMenu()">
+                    <button *ngFor="let index of list;let i=index;" mat-menu-item class="list" (click)="categoryProduct(index.request,index.category);setCategoryClicked(true)">{{index.category}}</button>
+                </span>
+            
+            </mat-menu>
+        </div> 
+    </div>
+    
+    <br>
+    <div class="container-fluid product-section">
+        <div class="product-grid1">
+            <div class="title">Filters</div>
+
+            <div class="price-range">
+                <div class="price">
+                    <p>Price</p>
+                    <div class="rangefrom">
+                        <div class="grid1">
+                            <div class="rangeprice">
+                                $ <input #minprice [type]="inputType" value="{{minPrice}}" (focus)="changeInputType('text')" (keydown.enter)="filterList(minprice.value,maxprice.value);changeInputType('button')">
+                                <span> - </span>
+                            </div>
+
+                            <div class="rangeprice">
+                                $ <input #maxprice [type]="inputType" value="{{maxPrice}}" (focus)="changeInputType('text')" (keydown.enter)="filterList(minprice.value,maxprice.value);changeInputType('button')">
+                            </div>
+                        </div>
+
+                        <div class="grid2">
+                            <p *ngIf="(minprice.value > maxprice.value) || (maxprice.value < minprice.value)">Invalid Price Range</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <ng5-slider #slide class="slider" [options]="rangeOption" (userChange)="rangeFunction(slide.value);filterList(10,slide.value,true)"></ng5-slider>
+                </div>
+            </div>
+
+            <div class="action">
+                <!-- <button class="btn btn-primary">Apply Filters</button> -->
+                <button class="btn btn-secondary" (click)="resetFilter(false)">Reset</button>
+            </div>
+        </div>
+
+        <div class="product-grid2" [@stagger]="allProductList.length">
+
+            <div class="sort">
+                <div>Sort By</div>
+
+                <mat-tab-group (selectedTabChange)="sortList($event)" [selectedIndex]="tabIndex">
+                    <mat-tab></mat-tab>
+                    <mat-tab label="Price - Low to High"></mat-tab>
+                    <mat-tab label="Price - High to Low"></mat-tab>
+                    <mat-tab label="Discount %"></mat-tab>
+                </mat-tab-group>
+            </div>
+
+            <div class="header">{{categoryProducts}}</div>
+
+            <div class="products">
+
+                <div *ngFor="let product of allProductList" (click)="viewProduct(product)" class="productList">
+                    
+                    <div class="product-col1">
+                        <img class="thumbnail" [src]="product.thumbnail">
+                    </div>
+                    
+                    <div class="product-col2">
+                        <div class="brand">{{product.brand}}</div>
+                    
+                    <a class="title">{{product.title}} </a>
+                    
+                    <div class="lP">
+                        <div class="discount">-{{product.discountPercentage}}%</div>
+                        <div class="price">$ {{product.price}}</div>
+                    </div>
+                    
+                    <div class="mrp">
+                        M. R. P: 
+                        <span class="originalPrice">
+                            {{product.price/(1-(product.discountPercentage/100)) | number}}
+                        </span> 
+                    </div>
+                </div> 
+            </div>
+
+            <!-- <mat-card class="product-col2">
+                <mat-card-content class="product">  
+                    <div class="product-col1">
+                        <img class="thumbnail" src="{{product.thumbnail}}">
+                    </div>
+
+                    <div class="product-col2">
+                        <div class="brand">{{product.brand}}</div>
+                        
+                        <mat-card-title class="title">{{product.title}}</mat-card-title>
+                        
+                        <div class="lP">
+                            <div class="discount">-{{product.discountPercentage}}%</div>
+                            <div class="price">$ {{product.price}}</div>
+                        </div>
+                        
+                        <div class="mrp">
+                            M. R. P: 
+                            <span class="originalPrice">
+                                {{product.price/(1-(product.discountPercentage/100)) | number}}
+                            </span> 
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card> -->
+        </div>
+        
+            <div *ngIf="allProductList.length == 0" class="none">
+                <p>No Item Found</p>
+            </div>
+    </div>
+
+    </div>
+
+    <!-- <mat-paginator class="paginator" [length]="100" [pageSize]="10" [pageSizeOptions]="[5,10,15,20,25]" (page)="paginationFunction($event)"></mat-paginator> -->
+</div>
+    
+
+    
