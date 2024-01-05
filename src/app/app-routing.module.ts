@@ -6,10 +6,10 @@ import { ProductComponent } from './mainpage/product/product.component';
 import { CartComponent } from './mainpage/cart/cart.component';
 
 const routes: Routes = [
-  {path:"",redirectTo: "login",pathMatch: "full"},
+  {path:"",redirectTo: "login",pathMatch: 'full'},
   {path:"login",component: LoginComponent},
   {path:"shop",component: ShopComponent},
-  {path:"shop/product",component: ProductComponent},
+  {path:"shop/product/:id",component: ProductComponent},
   {path:"shop/cart",component: CartComponent}
 ];
 
@@ -17,4 +17,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule { 
+  
+}

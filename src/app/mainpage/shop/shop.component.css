@@ -219,6 +219,12 @@
 
 .product-grid1 {
     width: 25%;
+    padding: 10px;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    border-radius: 5px;
+    height: fit-content;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
 }
 
 .site {
@@ -245,9 +251,9 @@
     /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
 }
 
-.thumbnail:hover {
-    width: 100%;
-    scale: 1.5;
+.productList:hover {
+    /* width: 100%; */
+    scale: 1.1;
     transition: 0.2s ease;
 }
 
@@ -263,6 +269,9 @@
     padding: 10px;
     display: flex;  
     flex-direction: column;
+    /* box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset; */
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+    border-radius: 5px;
     gap: 10px;
     background-color: rgb(242, 246, 255);
 }
@@ -322,7 +331,8 @@
 }
 
 .rangeprice > input {
-    width: 50px;
+    width: 80px;
+    /* width: fit-content; */
 }
 
 .rangeprice > span {
@@ -363,6 +373,7 @@
 
 .sort {
     display: flex;
+    padding-left: 10px;
     align-items: center;
     gap: 30px;
 }
@@ -375,4 +386,8 @@
     font-size: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.searchOptions {
+    font-family: 'Inter',sans-serif;
 }

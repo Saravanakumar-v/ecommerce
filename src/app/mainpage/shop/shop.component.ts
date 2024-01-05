@@ -1,9 +1,15 @@
 import { Component, HostListener, OnInit, QueryList, ViewChild } from '@angular/core';
-import { ProductDataService } from 'src/app/services/product-data.service';
+import { trigger,transition,query,style,stagger,animate } from '@angular/animations';
 import { category } from './category';
+import { search } from './searchlist';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
-import { trigger,transition,query,style,stagger,animate } from '@angular/animations';
+import { ProductDataService } from 'src/app/services/product-data.service';
+import { FormControl } from '@angular/forms';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-shop',
@@ -14,7 +20,7 @@ import { trigger,transition,query,style,stagger,animate } from '@angular/animati
       transition('* => *', [ 
         query(':enter', [
             style({ opacity: 0 }),
-            stagger(100, [animate('0.5s linear', style({ opacity: 1}))])
+            stagger(100, [animate('0.5s', style({ opacity: 1}))])
           ], { optional: true }
         )
       ])
@@ -27,24 +33,58 @@ export class ShopComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllProduct();
+    this.getCategory();
+
+    this.filteredOptions = this.searchInput.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
   }
 
+  ngOnDestroy(): void {
+  }
+
+  searchInput = new FormControl();
+  searchList: any = search;
+  filteredOptions: Observable<string[]>;
+
+  private _filter(value: string): string[] {
+    if (!value) {
+      return []; 
+    }
+    const filterValue = value.toLowerCase();
+    const filtered = this.searchList.filter(option => 
+      option.toLowerCase().startsWith(filterValue)
+    );
+  
+    if (filtered.length === 0 && value) {
+      return ['No item found'];
+    } else {
+      return filtered;
+    }
+  }
+
+  // refresh the whole webpage
+  refreshPage() {
+    this.getAllProduct();
+  }
+  
   productCategory = ["Electronics","Men","Women","Decoration","Essentials","Others"]
   tabIndex :number;
 
-  // allCategory: any;
-  // getCategory() {
-  //   console.log("function productCategory() {...}");
-  //   this.api.getProductCategory().subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //       this.allCategory = response;
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   )
-  // }
+  allCategory: any;
+  getCategory() {
+    console.log("function productCategory() {...}");
+    this.api.getProductCategory().subscribe(
+      (response) => {
+        console.log(response);
+        this.allCategory = response;
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
 
   onKeyPress(event: KeyboardEvent): boolean {
     const regex = /[a-z A-Z]/i;
@@ -126,13 +166,13 @@ export class ShopComponent implements OnInit {
       },
       (error) => {
         console.log(error);
-      }
+      }                    
     )
   }
 
   viewProduct(product) {
     this.shareData.routeData(product)
-    this.route.navigateByUrl("/shop/product");
+    this.route.navigateByUrl("/shop/product/:"+product.id);
   }
 
   cartList = []
@@ -154,60 +194,36 @@ export class ShopComponent implements OnInit {
   }
 
   // filter
-  minPrice: number = 10;
-  maxPrice: number = 10;
-  rangeOption = { 
-    floor: 10,
-    ceil: 1000,
-  }
-  rangeFunction(event) {
-    console.log(event);
-    this.maxPrice = event;
-  }
-
+  minPrice: number = 0;
+  maxPrice: number = 0;
   inputType:string = "button"
   changeInputType(para) {
     console.log(para);
     this.inputType = para;
   }
 
-  filterList(value1?:10,value2?:10,fromSlider?: boolean) {
-    this.tabIndex = 0;
-    let temp = [];
-    if(!fromSlider) {
-      let temp = {
-        floor: value1,
-        ceil: value2
-      }
-      this.rangeOption = temp;
-    }
-
-    this.api.everyProduct().subscribe(
+  temp= [];
+  filterList(value1?:1,value2?:1000) {
+    this.api.allProduct(100,0).subscribe(
       (response) => {
-        for(let i of (response as any).products) {
-          if(i.price <= value2 && i.price >= value1) {
-            temp.push(i);
-          } else if(i.price == value2) {
-            temp.push(i)
-          }
+        for(let index of (response as any).products) {
+          this.temp.push(index);
         }
+        this.allProductList = this.temp.filter(value => value.price >= value1 && value.price <= value2)
       }
     )
-    
-    this.allProductList = temp;
-    this.setCategoryClicked(true)
+    this.temp = [];
+    this.setCategoryClicked(true);
   }
 
   resetFilter(bool) {
-    this.getAllProduct();
-    this.setCategoryClicked(bool);
-
-    this.rangeOption = {
-      floor: 0,
-      ceil: 1000
+    if(this.isCategoryClicked == true) {
+      this.setCategoryClicked(bool);
+      this.getAllProduct();
     }
-    this.minPrice = 10;
-    this.maxPrice = 1000;
+
+    this.minPrice = 0;
+    this.maxPrice = 0;
   }
   
   // sort item
@@ -238,4 +254,29 @@ export class ShopComponent implements OnInit {
     }
 
 
-}
+  closemenu = false;
+  openMenu(trigger: MatMenuTrigger) {
+    this.closemenu = false;
+    trigger.openMenu();
+  }
+
+  prepareClose(trigger: MatMenuTrigger) {
+    this.closemenu = true;
+    setTimeout(() => {
+      if (this.closemenu) {
+        trigger.closeMenu();
+      }
+    }, 20);
+  }
+
+  stopClose(trigger: MatMenuTrigger) {
+    this.closemenu = false;
+  }
+
+  closeMenu(trigger: MatMenuTrigger) {
+    if (this.closemenu) {
+      trigger.closeMenu();
+    }
+  }
+
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               

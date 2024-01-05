@@ -1,11 +1,19 @@
 
 <div class="container-fluid">
+
     <div class="top-bar">
         <div>
-            <div class="site" (click)="getAllProduct();setCategoryClicked(false)">E-Shop</div>
+            <div class="site" (click)="setCategoryClicked(false);refreshPage()">E-Shop</div>
             
-            <input class="form-control web-search" type="text" placeholder="Search" #input (keypress)="onKeyPress($event)" (keydown.enter)="searchProduct(input.value);setCategoryClicked(true)">
-            
+            <!-- <input class="form-control web-search" type="text" placeholder="Search" #input (keypress)="onKeyPress($event)" (keydown.enter)="searchProduct(input.value);setCategoryClicked(true)"> -->
+
+            <input type="text" class="form-control web-search" matInput placeholder="Search" [formControl]="searchInput" [matAutocomplete]="auto" (keypress)="onKeyPress($event)" (keydown.enter)="searchProduct(input.value);setCategoryClicked(true)"  #input>
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option" class="searchOptions" [disabled]="option === 'No item found'">
+                  {{option}}
+                </mat-option>
+            </mat-autocomplete>
+
             <div class="material-symbols-outlined cart" (click)="addtoCart()">
                 shopping_cart
                 <span class="badge badge-warning">{{cartLength}}</span>
@@ -15,26 +23,24 @@
 
     <div class="category">
         <div class="btn-group" *ngFor="let category of productCategory;let i=index">
-            <button type="button" class="btn btn-default list" [matMenuTriggerFor]="menu" #triggerMenu="matMenuTrigger" (mouseenter)="categoryList(i);triggerMenu.openMenu()" (mouseleave)="triggerMenu.closeMenu()">
-                <span>{{category}}</span>
+            <button type="button" class="btn btn-default list" [matMenuTriggerFor]="menu" #trigger="matMenuTrigger" (mouseenter)="categoryList(i);openMenu(trigger)" (mouseleave)="prepareClose(trigger);suddenClose(trigger)">
+                {{category}}
             </button>
-            
-            <mat-menu [hasBackdrop]="false" #menu="matMenu" class="menu">
 
-                <span (mouseleave)="triggerMenu.closeMenu()">
+            <mat-menu [hasBackdrop]="false" #menu="matMenu" class="menu" id="matPanel">
+                <span (mouseenter)="stopClose(trigger)" (mouseleave)="trigger.closeMenu()">
                     <button *ngFor="let index of list;let i=index;" mat-menu-item class="list" (click)="categoryProduct(index.request,index.category);setCategoryClicked(true)">{{index.category}}</button>
                 </span>
-            
             </mat-menu>
         </div> 
     </div>
-    
     <br>
     <div class="container-fluid product-section">
         <div class="product-grid1">
             <div class="title">Filters</div>
 
             <div class="price-range">
+
                 <div class="price">
                     <p>Price</p>
                     <div class="rangefrom">
@@ -45,19 +51,16 @@
                             </div>
 
                             <div class="rangeprice">
-                                $ <input #maxprice [type]="inputType" value="{{maxPrice}}" (focus)="changeInputType('text')" (keydown.enter)="filterList(minprice.value,maxprice.value);changeInputType('button')">
+                                $ <input class="maxprice" #maxprice [type]="inputType" value="{{maxPrice}}" (focus)="changeInputType('text')" (keydown.enter)="filterList(minprice.value,maxprice.value);changeInputType('button')">
                             </div>
                         </div>
 
                         <div class="grid2">
-                            <p *ngIf="(minprice.value > maxprice.value) || (maxprice.value < minprice.value)">Invalid Price Range</p>
+                            <p *ngIf="(minprice.value > maxprice.value)">Invalid Price Range</p>
                         </div>
                     </div>
                 </div>
-                
-                <div>
-                    <ng5-slider #slide class="slider" [options]="rangeOption" (userChange)="rangeFunction(slide.value);filterList(10,slide.value,true)"></ng5-slider>
-                </div>
+
             </div>
 
             <div class="action">
@@ -79,12 +82,10 @@
                 </mat-tab-group>
             </div>
 
-            <div class="header">{{categoryProducts}}</div>
+            <!-- <div class="header">{{categoryProducts}}</div> -->
 
             <div class="products">
-
                 <div *ngFor="let product of allProductList" (click)="viewProduct(product)" class="productList">
-                    
                     <div class="product-col1">
                         <img class="thumbnail" [src]="product.thumbnail">
                     </div>
@@ -135,9 +136,9 @@
             </mat-card> -->
         </div>
         
-            <div *ngIf="allProductList.length == 0" class="none">
-                <p>No Item Found</p>
-            </div>
+        <div *ngIf="allProductList.length == 0" class="none">
+            <p>No Item Found</p>
+        </div>
     </div>
 
     </div>

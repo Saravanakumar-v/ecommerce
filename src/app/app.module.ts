@@ -15,6 +15,9 @@ import { ProductComponent } from './mainpage/product/product.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSliderModule } from '@angular/material/slider';
@@ -22,9 +25,8 @@ import { MatCardModule } from '@angular/material/card'
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { Ng5SliderModule } from 'ng5-slider';
-
-
 
 @NgModule({
   declarations: [
@@ -36,9 +38,11 @@ import { Ng5SliderModule } from 'ng5-slider';
   ],
   imports: [
     BrowserAnimationsModule,
+    MatAutocompleteModule,
     MatSlideToggleModule,
     ReactiveFormsModule,
     MatPaginatorModule,
+    MatFormFieldModule,
     MatSnackBarModule,
     AppRoutingModule,
     HttpClientModule,
@@ -47,10 +51,12 @@ import { Ng5SliderModule } from 'ng5-slider';
     Ng5SliderModule,
     MatSliderModule,
     MatChipsModule,
+    MatInputModule,
     BrowserModule,
     MatMenuModule,
     MatTabsModule,
     MatCardModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
