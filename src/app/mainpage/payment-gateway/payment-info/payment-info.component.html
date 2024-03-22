@@ -1,0 +1,108 @@
+<div class="checkout" [class.dark]="setTheme">
+    <div class="address-container">
+        <mat-accordion class="accordian">
+            <mat-expansion-panel class="expansion" [expanded]="panel == 1">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title class="title">
+                        <span>1</span>
+                        Delivery Address
+                    </mat-panel-title>
+                    <mat-panel-description class="description">
+                        <div *ngIf="radioSelected == false" id="selectAddress">
+                            Select your Delivery Address
+                        </div>
+                        <div *ngIf="radioSelected">
+                            <div><strong>{{address.username}}</strong></div>
+                    <div>No {{address.houseno}}, {{address.streetname}}</div>
+                    <div>{{address.city}}, Pincode : {{address.pincode}}</div> 
+                    <div><strong>Contact:</strong> {{address.contact}}</div>
+                </div>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        
+        <div class="expansion-panel1">  
+            <div class="add-address">
+                <div class="address-list">
+                    <div class="address-header">Your Address</div> 
+                    <div *ngFor="let address of addressList,let i=index;" class="user-address-list">
+                        <div class="user-address">
+                            <input type="radio" name="address-radio" (change)="selectAddress(i);nextPanel(2)">
+                            <div class="address-container">
+                                <div><strong>{{address.username}}</strong>, No {{address.houseno}}, {{address.streetname}}, {{address.city}}, Pincode : {{address.pincode}} &nbsp; </div>
+                                <div><strong>Contact:</strong> {{address.contact}}</div>
+                            </div>
+                            <!-- <div class="delete-address">
+                                <span class="material-symbols-outlined btn-delete" (click)="addressList.splice(i,1)">
+                                    delete
+                                </span>
+                            </div> -->
+                        </div>
+                    </div>
+                    </div>
+                    
+                    <button class="btn btn-default btn-add" (click)="addAddress()" >
+                        <span class="material-symbols-outlined">
+                            add
+                        </span>
+                        <div>Add a new address</div>
+                    </button>
+                </div>
+            </div>            
+        </mat-expansion-panel>
+        
+    <mat-expansion-panel [expanded]="panel == 2" class="expansion">
+        
+        <mat-expansion-panel-header>
+            <mat-panel-title class="title">
+                <span>2</span>
+                Payment Method
+            </mat-panel-title>
+            <mat-panel-description class="description">
+                <div *ngIf="!paymentSelected" id="payment">
+                    Select your Payment Method
+                </div>
+                <div *ngIf="paymentSelected">
+                    {{paymenttype}}
+                </div>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        
+        <div class="expansion-panel2">
+            <input type="radio" name="payment-method" (change)="selectPayment()">  
+            Cash on Delivery / Pay on Delivery
+        </div>
+        
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="panel == 3" class="expansion">
+        
+        <mat-expansion-panel-header>
+            <mat-panel-title class="title">
+                <span>3</span>
+                Review your Items details
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        
+        <div class="expansion-panel3">
+            <div *ngFor="let productData of orderList" class="list">
+                <div>
+                    <img src="{{productData.thumbnail}}" class="img">
+                </div>
+                <div>
+                    <div>{{productData.brand}}</div>
+                    <div>{{productData.title}}</div>
+                </div>
+                <div>
+                    <div>$ {{productData.price}}</div>
+                </div>
+            </div>
+            <br>
+            <div>
+                <button class="btn btn-secondary btn-revieworder" (click)="nextPanel(1)">Review Order</button> &nbsp;
+                <button class="btn btn-primary btn-revieworder" (click)="confirmOrder()">Confirm Order</button>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    </mat-accordion>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<br>
+<div class="product" [class.dark]="setTheme">
+    <div class="container" >
+        <div class="container-grid1">
+        <div class="product-img">
+            <div  *ngFor="let img of productData.images">
+                <img class="side-img" src="{{img}}" (click)="mainImage(img)" (mouseover)="mainImage(img)">
+            </div>
+        </div>
+        
+        <div class="main-img">
+            <img class="img" src="{{mainImg}}">
+        </div>
+    </div>
+        
+    <div class="container-grid2">
+        <div class="product-desc">
+            <div class="product-header">
+                <h5>{{productData.brand}}  {{productData.title}}</h5>
+            </div>
+            
+            <div class="description">
+                <p>{{productData.description}}</p> 
+            </div>
+            
+            <!-- <div class="form">
+                <form [formGroup]="orderData" class="quantity">
+                    Quantity&nbsp;:&nbsp;<input type="text" class="form-control" value="1" formControlName="quantity">
+                </form>
+            </div> -->
+            
+            <div class="price">Price: <strong class="str-price">US $ {{productData.price}}.00</strong></div>
+        </div>
+
+        <div class="order">
+            <button class="btn btn-primary buy" (click)="checkOut(productData)">Buy Now</button>
+            <button class="btn btn-warning cart" (click)="addtoCart(productData);confirmationMsg()">Add to Cart</button>
+        </div>
+    </div>
+</div>

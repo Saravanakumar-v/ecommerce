@@ -1,0 +1,205 @@
+
+.payment {
+    padding: 10px;
+    font-family: 'inter',sans-serif;
+}
+
+.payment-header {
+    font-size: x-large;
+    text-align: center;
+    margin: 25px;
+}
+
+.address {
+    width: 100%;
+    display: flex;
+    gap: 25px;
+}
+
+.index {
+    font-size: larger;
+    width: fit-content;
+}
+
+.address-header {
+    font-size: larger;
+    margin-bottom: 10px;
+}
+
+.grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 90%;
+}
+
+.btn-add {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.btn-confirm {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.address-list {
+    padding: 10px;
+    width: 800px;
+}
+
+.address-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-control {
+    width: 500px;
+    padding: 10px;
+}
+
+.user-address-list {
+    padding: 10px;
+}
+
+.user-address {
+    font-size: 14px;
+    width: 500px;
+    border: 1px solid;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 3px;
+}
+
+::ng-deep.mat-expansion-panel-header {
+    padding: 10px;
+    font-family: 'Inter',sans-serif;
+}
+
+.expansion-panel1,.expansion-panel2,.expansion-panel3 {
+    font-family: 'Inter',sans-serif;
+    margin-left: 20px;
+}
+
+::ng-deep.mat-expansion-panel-header-title {
+    font-size: larger;
+} 
+
+
+span {
+    padding-right: 10px;
+}
+
+::ng-deep.mat-content {
+    padding: 10px;
+}
+
+.expansion-panel2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+::ng-deep.mat-expansion-panel {
+    width: 800px;
+}
+
+.address-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkout {
+    margin: auto;
+    gap: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.summary {
+    font-family: 'Inter',sans-serif;
+    height: fit-content;
+    width: 350px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+
+.accordian {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.btn-placeorder {
+    font-size: small;
+    width: 100%;
+}
+
+.btn-revieworder {
+    font-size: small;
+}
+
+.address-details,.payment-details {
+    font-size: small;
+    padding: 5pxe;
+}
+
+.delete-address {
+    cursor: pointer;
+}
+
+.list {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+.img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.cart.dark {
+    background-color: var(--background-primary);
+    color: var(--text-secondary);
+    color: var(--text-primary);
+
+    .expansion,.summary {
+        background-color: var(--background-secondary);
+        color: var(--text-secondary);
+    }
+
+    .accordian {
+        color: var(--text-secondary);
+    }
+
+    ::ng-deep.mat-expansion-panel-header {
+        color: var(--text-primary);
+    }
+
+    .title {
+        color: var(--text-primary);
+    }
+
+    .description {
+        color: var(--text-secondary);
+    }
+
+    .head {
+        color: var(--text-primary);
+    }
+
+    .user-address {
+        border: 1px solid var(--border-color);
+    }
+}

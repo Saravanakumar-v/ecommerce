@@ -1,0 +1,30 @@
+
+
+<!-- Login Page -->
+<div class="container">
+    <div>
+        <div>
+            <h2>Log in</h2>
+        </div>
+        <div class="login-form">
+            <br>
+            <form [formGroup]="loginForm" (ngSubmit)="dummylogin()" novalidate>
+                <!-- <p class="error">{{errorMessage}}</p> -->
+                <div class="form-field">
+                    <label class="form-label">Username</label>
+                    <input class="form-control" type="text" formControlName="username">
+                </div>
+                
+                <div class="form-field">
+                    <label class="form-label">Password</label>
+                    <input class="form-control" type="password" formControlName="password">
+                </div>
+                <span class="form-checkbox">
+                    <input type="checkbox">Show Password
+                </span>
+                    
+                <button class="btn btn-secondary">Login</button>
+            </form>
+        </div>
+    </div>
+</div>

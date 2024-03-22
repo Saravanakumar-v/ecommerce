@@ -1,0 +1,55 @@
+
+<div class="container-fluid cart" [class.dark]="setTheme">
+    <div style="font-size: 22px;margin-bottom: 20px;margin-left: 50px;">Shopping Cart</div>
+    <div class="cart" *ngFor="let cartProduct of cartList;let i=index">
+        <div class="product">
+            <div class="product-img">
+                <img class="thumbnail" src="{{cartProduct.thumbnail}}">
+            </div>
+
+            <div class="product-name">
+                <div class="cart-title">
+                    <div>{{cartProduct.brand}}</div>
+                    <div class="title">{{cartProduct.title}}</div>
+                </div>
+
+                <div class="cart-edit">
+                    <div class="cart-item">
+                        <div>Qty: 1 &nbsp;</div>
+                     </div>
+                    <div class="deleteCart" (click)="removeCartItem(i)">
+                        <span class="material-symbols-outlined">
+                            delete
+                        </span>Delete
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-price">
+                <div>
+                    $ {{cartProduct.price}}
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div *ngIf="cartList.length == 0" class="emptyCart">
+        <p class="text">Your cart is empty</p>
+        <p class="link" (click)="navigate()">Go to Shop</p>
+    </div>
+
+    <div class="total">
+        <div>
+            Subtotal ({{cartList.length}} items): 
+                &nbsp;$ {{total}}
+        </div>
+        <br>
+        
+            <div> 
+                <button class="btn btn-primary" style="left: auto;right: 0;" [disabled]="cartList.length == 0" (click)="toCheckout()">Proceed to Buy</button>
+            </div>
+    </div>
+
+
+</div>

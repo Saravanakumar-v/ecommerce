@@ -1,0 +1,41 @@
+
+<div class="container">
+    <div class="close" (click)="close()"> 
+        <span class="material-symbols-outlined">
+            cancel
+        </span>
+    </div>
+    <div class="dialog-header">
+        Delivery Address
+
+    </div>
+    <form class="address-form" [formGroup]="address">
+                        
+        <div class="address-form-header">Add a new address</div>
+        <mat-divider></mat-divider>
+
+        <input type="text" placeholder="Username" class="form-control" formControlName="username" (keypress)="onlyString($event)">
+        <span class="error" *ngIf="address.controls.username.dirty && address.controls.username.invalid">Limit Username to 15 Characters</span>
+        
+        <input type="text" placeholder="House no" class="form-control" formControlName="houseno" (keypress)="onlyNumber($event)">
+        <span class="error" *ngIf="address.controls.houseno.dirty && address.controls.houseno.invalid">Invalid Residental number</span>
+
+        <input type="text" placeholder="Street Name" class="form-control" formControlName="streetname" (keypress)="onlyString($event)">
+
+        <input type="text" placeholder="Contact Number" class="form-control" formControlName="contact" (keypress)="onlyNumber($event)" minlength="10">
+        <span class="error" *ngIf="address.controls.contact.dirty && address.controls.contact.invalid">Invalid Contact Number</span>
+        
+        <input type="text" placeholder="City" class="form-control" formControlName="city" (keypress)="onlyString($event)">
+    
+        <input type="text" placeholder="Pincode" class="form-control" formControlName="pincode" (keypress)="onlyNumber($event)">
+        <span class="error" *ngIf="address.controls.pincode.dirty && address.controls.pincode.invalid">Invalid Pincode</span>
+    </form>
+
+    <div class="form-error" *ngIf="isInvalid">Check your Delivery address</div>
+    <button class="btn btn-default btn" (click)="addAddress()">
+        <span class="material-symbols-outlined">
+            add
+        </span>
+        <div>Add address</div>
+    </button>
+</div>

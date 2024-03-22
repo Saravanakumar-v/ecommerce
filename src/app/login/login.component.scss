@@ -1,0 +1,29 @@
+.container {
+    font-family: var(--font);
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 400px;
+    padding: 2rem;
+    margin: auto;
+    margin-top: 50px;
+
+    .login-form {
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-field {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-checkbox {
+            display: flex;
+            gap: 5px;
+            margin-left: 10px;
+        }
+    }
+}

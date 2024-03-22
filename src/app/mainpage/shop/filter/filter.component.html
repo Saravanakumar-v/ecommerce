@@ -1,0 +1,32 @@
+<div class="container-fluid">
+        <div class="title">Filters</div>
+
+        <div class="price-range">
+
+        <div class="price">
+            <p>Price</p>
+            <div class="rangefrom">
+                <div class="grid1">
+                    <div class="rangeprice">
+                        $ <input #minprice [type]="inputType" value="{{minPrice}}" (focus)="changeInputType('text')" (keydown.enter)="filterList(minprice.value,maxprice.value);changeInputType('button')">
+                        <span> - </span>
+                    </div>
+                    
+                    <div class="rangeprice">
+                        $ <input class="maxprice" #maxprice [type]="inputType" value="{{maxPrice}}" (focus)="changeInputType('text')" (keydown.enter)="filterList(minprice.value,maxprice.value);changeInputType('button')">
+                    </div>
+                </div>
+
+                <div class="grid2">
+                    <p *ngIf="(minprice.value > maxprice.value)">Invalid Price Range</p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="action">
+        <!-- <button class="btn btn-primary">Apply Filters</button> -->
+        <button class="btn btn-secondary" (click)="resetFilter(false)">Reset</button>
+    </div>
+</div>

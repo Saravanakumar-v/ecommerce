@@ -1,0 +1,39 @@
+
+<div class="cart" [class.dark]="setTheme">
+
+    <div class="payment">
+        <div class="payment-header">
+        Checkout
+    </div>
+</div>
+
+<div class="checkout">
+    <app-payment-info></app-payment-info>
+    <div class="summary">
+    <div class="summary-detail">
+        <h5 class="head">Order Summary</h5>
+
+        Deliver to:
+        <div style="padding: 10px;">
+            <div class="address-details" *ngIf="radioSelected">
+                <div>No {{address.houseno}}, {{address.streetname}}</div>
+                <div>{{address.city}}, Pincode : {{address.pincode}}</div> 
+                <div><strong>Contact:</strong> {{address.contact}}</div>
+            </div>
+            
+            <div class="payment-details" *ngIf="paymentSelected">
+                <strong>
+                    <div>{{paymenttype}}</div>
+                </strong> 
+            </div>
+            
+        </div>
+        <div>
+            <div>Order Total: $ {{orderTotal}}</div>
+            <br>
+        </div>
+        <button class="btn btn-primary btn-placeorder" [disabled]="placeOrder" (click)="orderConfirmed()">Place Order</button>
+    </div>
+</div>
+</div>
+</div>
